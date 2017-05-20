@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.sodevan.ivrsystem.Call"
-    android:background="#000">
+    android:background="#000"
+    android:id="@+id/rel">
 
 </RelativeLayout>

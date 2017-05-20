@@ -4,6 +4,8 @@ android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
     defaultConfig {
+        multiDexEnabled true
+
         applicationId "com.sodevan.ivrsystem"
         minSdkVersion 15
         targetSdkVersion 25
@@ -27,4 +29,18 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.1'
     testCompile 'junit:junit:4.12'
+    compile 'ai.api:libai:1.4.8'
+    compile 'ai.api:sdk:2.0.5@aar'
+// api.ai SDK dependencies
+    compile 'com.google.code.gson:gson:2.3'
+    compile 'commons-io:commons-io:2.4'
+}
+android {
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+    }
 }
