@@ -76,6 +76,8 @@ public class Call extends AppCompatActivity {
                 else if(value.equals("internet")){
                     text="Our internet offers are, 1 gb data for 250 rupees, 2 gb data for 300 rupees";
                 }
+                else
+                    text=value;
                 tts.speak(text,TextToSpeech.QUEUE_FLUSH,null);
 
             }
