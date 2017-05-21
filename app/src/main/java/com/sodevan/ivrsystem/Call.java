@@ -20,20 +20,38 @@ public class Call extends AppCompatActivity {
     final String CLIENT_ACCESS_TOKEN="0f962c1104ea4663bb5fa1ca2bb105ad";
     RelativeLayout rel;
     int i=0;
-
+    TextToSpeech tts;
+    String text;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_call);
         rel= (RelativeLayout) findViewById(R.id.rel);
-        t1=new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+
+        tts=new TextToSpeech(Call.this, new TextToSpeech.OnInitListener() {
+
             @Override
-            public void onInit(int i) {
-                if(i!=TextToSpeech.ERROR)
-                    t1.setLanguage(Locale.UK);
+            public void onInit(int status) {
+                // TODO Auto-generated method stub
+                if(status == TextToSpeech.SUCCESS){
+                    int result=tts.setLanguage(Locale.US);
+                    if(result==TextToSpeech.LANG_MISSING_DATA ||
+                            result==TextToSpeech.LANG_NOT_SUPPORTED){
+                        Log.e("error", "This Language is not supported");
+                    }
+                    else{
+                        text="Good Morning. Please Tell your Request!";
+                        tts.speak(text,TextToSpeech.QUEUE_FLUSH,null);
+
+                    }
+                }
+                else
+                    Log.e("error", "Initilization Failed!");
             }
         });
-        t1.speak("hey ronak",TextToSpeech.QUEUE_FLUSH, null);
+
+
+
         final AIConfiguration config = new AIConfiguration(CLIENT_ACCESS_TOKEN,
                 AIConfiguration.SupportedLanguages.English,
                 AIConfiguration.RecognitionEngine.System);
@@ -44,7 +62,22 @@ public class Call extends AppCompatActivity {
             @Override
             public void onResult(AIResponse result) {
                 Log.d("TAG","rechd");
-                Log.d("TAG", String.valueOf(result.getResult().getFulfillment().getSpeech()));
+                String value= String.valueOf(result.getResult().getFulfillment().getSpeech());
+                Log.d("TAG",value);
+                if(value.equals("talk")){
+                    text="Okay, Redirecting your call to our customer care representative.";
+                }
+                else if(value.equals("Balance")){
+                    text="Your balance is Rs.250";
+                }
+                else if(value.equals("offers")){
+                    text="You get full talktime in rs.250";
+                }
+                else if(value.equals("internet")){
+                    text="Our internet offers are, 1 gb data for 250 rupees, 2 gb data for 300 rupees";
+                }
+                tts.speak(text,TextToSpeech.QUEUE_FLUSH,null);
+
             }
 
             @Override
